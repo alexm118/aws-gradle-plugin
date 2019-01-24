@@ -11,6 +11,8 @@ public class CloudFormation extends DefaultTask {
 
     @TaskAction
     public void listStacks(){
-        System.out.println(client.listStacks().toString());
+        client.listStacks()
+                .getStackSummaries()
+                .forEach(stackSummary -> System.out.println(stackSummary.getStackName()));
     }
 }
