@@ -4,8 +4,8 @@ import org.gradle.api.Project;
 import org.gradle.api.provider.Property;
 
 public class CreateStackExtension {
-    Property<String> stackName;
-    Property<String> filePath;
+    Property<String> stackName
+    Property<String> filePath
 
     public CreateStackExtension(Project project) {
         stackName = project.objects.property(String)
