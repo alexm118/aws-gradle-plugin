@@ -7,7 +7,7 @@ public class CreateStackExtension {
     final Property<String> stackName;
     final Property<String> filePath;
 
-    CreateStackExtension(Project project) {
+    public CreateStackExtension(Project project) {
         stackName = project.getObjects().property(String.class);
         stackName.set("Example");
         filePath = project.getObjects().property(String.class);
