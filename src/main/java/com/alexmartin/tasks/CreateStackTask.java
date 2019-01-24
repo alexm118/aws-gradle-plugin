@@ -8,39 +8,31 @@ import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.TaskAction;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class CreateStackTask extends DefaultTask {
 
     private AmazonCloudFormation client = AmazonCloudFormationClientBuilder.standard().build();
 
-    final Property<String> stackName = getProject().getObjects().property(String.class);
-    final Property<String> filePath = getProject().getObjects().property(String.class);
+    Property<String> stackName = getProject().getObjects().property(String.class);
+    Property<String> filePath = getProject().getObjects().property(String.class);
 
     @TaskAction
     public void createStack() {
         CreateStackRequest stackRequest = new CreateStackRequest();
         try {
+            System.out.println("Stack Name: " + stackName.get());
+            System.out.println("Stack File: " + filePath.get());
             stackRequest.withStackName(stackName.get());
-            stackRequest.withTemplateBody(
-                    convertStreamToString(
-                            CreateStackTask.class.getResourceAsStream(filePath.get())));
+            stackRequest.withTemplateBody(new String(Files.readAllBytes(Paths.get(filePath.get()))));
+            System.out.println(stackRequest.toString());
             client.createStack(stackRequest);
         } catch (Exception e) {
-            System.out.println("Error creating stack" + e.getMessage());
+            System.out.println("Error creating stack: " + e.getMessage());
         }
     }
-
-    private static String convertStreamToString(InputStream in) throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        StringBuilder stringbuilder = new StringBuilder();
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            stringbuilder.append(line + "\n");
-        }
-        in.close();
-        return stringbuilder.toString();
-    }
-
 }
