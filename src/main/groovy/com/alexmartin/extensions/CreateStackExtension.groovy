@@ -8,10 +8,10 @@ public class CreateStackExtension {
     final Property<String> filePath;
 
     public CreateStackExtension(Project project) {
-        stackName = project.getObjects().property(String.class);
-        stackName.set("Example");
-        filePath = project.getObjects().property(String.class);
-        filePath.set("template.yaml");
+        stackName = project.objects.property(String)
+        stackName.set("Example")
+        filePath = project.objects.property(String)
+        filePath.set("template.yaml")
 
     }
 }
