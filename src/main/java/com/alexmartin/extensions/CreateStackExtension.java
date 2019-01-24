@@ -3,7 +3,7 @@ package com.alexmartin.extensions;
 import org.gradle.api.Project;
 import org.gradle.api.provider.Property;
 
-class CreateStackExtension {
+public class CreateStackExtension {
     final Property<String> stackName;
     final Property<String> filePath;
 
