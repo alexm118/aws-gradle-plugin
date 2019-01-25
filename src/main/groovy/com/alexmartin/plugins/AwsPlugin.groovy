@@ -17,6 +17,7 @@ public class AwsPlugin implements Plugin<Project> {
         project.tasks.create("createStack", CreateStackTask) {
             stackName = createStackExtension.stackName
             filePath = createStackExtension.filePath
+            params = createStackExtension.params
         }
         project.tasks.create("deleteStack", DeleteStackTask) {
             stackName = deleteStackExtension.stackName
