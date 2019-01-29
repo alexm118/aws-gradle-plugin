@@ -2,6 +2,13 @@
 
 Extendable library to deliver AWS functionality as gradle tasks. 
 
+## Setting up your AWS Credentials
+
+The Gradle AWS Plugin utilizes the standard AWS Client builder.
+
+For more detailed instructions about how to configure your local AWS Credentials,
+please see the [AWS Documentation](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html)
+
 ## Getting Started
 Add the gradle plugins library as a maven repository and the AWS Plugin as a dependency.
 
@@ -24,23 +31,9 @@ Apply the plugin
 apply plugin: "com.alexmartin.plugins.AwsPlugin"
 ```
 
-Import the desired Tasks and utility functions
+## Supported Features
 
-```groovy
-import static com.alexmartin.utility.GetStackOutput.getStackOutput
-import com.alexmartin.tasks.*
-```
-
-Register your desired tasks
-eg:
-
-```groovy
-tasks.register("createDemoBucket", CreateStackTask) {
-  stackName = "alex-demo-bucket"
-  filePath = "s3.yaml"
-  params = [BucketName: "alex-demo-gradle-task"]
-}
-```
+  * [CloudFormation](./cloudformation.md)
 
 ### Support or Contact
 
