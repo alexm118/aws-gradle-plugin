@@ -13,7 +13,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.com.alexmartin.plugins.AwsPlugin:aws-gradle-plugin:0.0.19"
+    classpath "gradle.plugin.com.alexmartin.plugins.AwsPlugin:aws-gradle-plugin:0.1.0"
   }
 }
 ```
