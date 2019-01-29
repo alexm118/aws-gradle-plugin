@@ -7,6 +7,7 @@ import com.amazonaws.services.cloudformation.model.Parameter;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.provider.MapProperty;
 import org.gradle.api.provider.Property;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 
 import java.nio.file.Files;
@@ -19,18 +20,46 @@ public class CreateStackTask extends DefaultTask {
 
     private AmazonCloudFormation client = AmazonCloudFormationClientBuilder.standard().build();
 
-    Property<String> stackName = getProject().getObjects().property(String.class);
-    Property<String> filePath = getProject().getObjects().property(String.class);
-    MapProperty<String, String> params = getProject().getObjects().mapProperty(String.class, String.class);
+    String stackName;
+    String filePath;
+
+    @Input
+    public String getStackName() {
+        return stackName;
+    }
+
+    public void setStackName(String stackName) {
+        this.stackName = stackName;
+    }
+
+    @Input
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    @Input
+    public Map<String, Object> getParams() {
+        return params;
+    }
+
+    public void setParams(Map<String, Object> params) {
+        this.params = params;
+    }
+
+    Map<String, Object> params;
 
     @TaskAction
     public void createStack() {
         CreateStackRequest stackRequest = new CreateStackRequest();
         try {
-            System.out.println("Stack Name: " + stackName.get());
-            System.out.println("Stack File: " + filePath.get());
-            stackRequest.withStackName(stackName.get());
-            stackRequest.withTemplateBody(new String(Files.readAllBytes(Paths.get(filePath.get()))));
+            System.out.println("Stack Name: " + stackName);
+            System.out.println("Stack File: " + filePath);
+            stackRequest.withStackName(stackName);
+            stackRequest.withTemplateBody(new String(Files.readAllBytes(Paths.get(filePath))));
             stackRequest.withParameters(convertMapToParams());
             System.out.println(stackRequest.toString());
             client.createStack(stackRequest);
@@ -40,9 +69,8 @@ public class CreateStackTask extends DefaultTask {
     }
 
     private List<Parameter> convertMapToParams() {
-        Map<String, String> parameters = params.get();
         List<Parameter> cloudformationParameters = new ArrayList<>();
-        for(Map.Entry entry : parameters.entrySet()) {
+        for(Map.Entry entry : params.entrySet()) {
             Parameter temp = new Parameter()
                     .withParameterKey(entry.getKey().toString())
                     .withParameterValue(entry.getValue().toString());
