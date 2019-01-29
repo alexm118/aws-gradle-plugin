@@ -37,7 +37,7 @@ dependencies {
 pluginBundle {
     website = 'https://github.com/alexm118/aws-gradle-plugin'
     vcsUrl = 'https://github.com/alexm118/aws-gradle-plugin.git'
-    tags = ['test']
+    tags = ['AWS', 'CloudFormation']
 }
 
 gradlePlugin {
