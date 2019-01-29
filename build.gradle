@@ -44,7 +44,7 @@ gradlePlugin {
     plugins {
         awsPlugin {
             id = 'com.alexmartin.plugins.AwsPlugin'
-            version = '0.0.19'
+            version = '0.1.0'
             displayName = 'AWS Plugin'
             description = 'Plugin to expose AWS Java SDK as gradle tasks'
             implementationClass = 'com.alexmartin.plugins.AwsPlugin'
