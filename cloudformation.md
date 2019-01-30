@@ -44,7 +44,19 @@ After defining our task we can run:
 gradle createS3Bucket
 ```
 
-And when we want to clean up we can run:
+`CreateStackTask` will treat the following statuses as a successful creation:
+* CREATE_COMPLETE
+* UPDATE_COMPLETE
+
+It will treat the following statuses as a failed stack creation:
+* CREATE_FAILED
+* ROLLBACK_FAILED
+* UPDATE_ROLLBACK_COMPLETE
+* UPDATE_ROLLBACK_FAILED
+
+The current behavior is to wait until the stack reaches either a failure state or a successful state.
+
+Now when we want to clean up we can run:
 
 ```sh
 gradle deleteS3Bucket
